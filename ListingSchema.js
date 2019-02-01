@@ -8,21 +8,20 @@ var listingSchema = new Schema({
   code: String,
   name: String, 
   address: String,
-  created_at    : { type: Date },
-  updated_at    : { type: Date },
-  meta: {
-    coordinateLatitude: String,
-    coordinateLongitude: String
+  created_at: Date,
+  updated_at: Date,
+  coordinates: {
+    latitude: String,
+    longitude: String
   }
 });
 
 /* create a 'pre' function that adds the updated_at (and created_at if not already there) property */
 listingSchema.pre('save', function(next) {
   /* your code here */
-  now = new Date();
-  this.updated_at = now;
+  this.updated_at = Date.now;
   if ( !this.created_at ) {
-    this.created_at = now;
+    this.created_at = Date.now;
   }  
   next();
 });
